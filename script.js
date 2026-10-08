@@ -1,4 +1,4 @@
-// Infinitive Cloud Interactive Script Engine
+// Infinitive Cloud - Interactive Engine
 
 document.addEventListener('DOMContentLoaded', () => {
   initHeroCloudCanvas();
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* -------------------------------------------------------------
-   1. HERO CANVAS - Cyber Cloud Particle Matrix Visualizer
+   1. HERO CANVAS - 3D Cyber Cloud & Network Particle Renderer
    ------------------------------------------------------------- */
 function initHeroCloudCanvas() {
   const canvas = document.getElementById('heroCanvas');
@@ -19,57 +19,56 @@ function initHeroCloudCanvas() {
 
   function resizeCanvas() {
     canvas.width = canvas.parentElement.clientWidth;
-    canvas.height = canvas.parentElement.clientHeight || 450;
+    canvas.height = canvas.parentElement.clientHeight || 460;
   }
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
 
   const particles = [];
-  const particleCount = 65;
+  const particleCount = 75;
 
   for (let i = 0; i < particleCount; i++) {
     particles.push({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.8,
-      vy: (Math.random() - 0.5) * 0.8,
+      vx: (Math.random() - 0.5) * 0.7,
+      vy: (Math.random() - 0.5) * 0.7,
       radius: Math.random() * 2 + 1,
-      alpha: Math.random() * 0.7 + 0.3,
-      color: Math.random() > 0.5 ? '#00f0ff' : '#0072ff'
+      color: Math.random() > 0.4 ? '#00c8ff' : '#1683ff'
     });
   }
 
   function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Draw central glowing cloud orb
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
 
-    const radialGradient = ctx.createRadialGradient(
-      centerX, centerY, 10,
-      centerX, centerY, 180
+    // Glowing Atmospheric Core Gradient
+    const radialGrad = ctx.createRadialGradient(
+      centerX, centerY, 15,
+      centerX, centerY, 220
     );
-    radialGradient.addColorStop(0, 'rgba(0, 150, 255, 0.25)');
-    radialGradient.addColorStop(0.5, 'rgba(0, 100, 255, 0.08)');
-    radialGradient.addColorStop(1, 'rgba(5, 8, 20, 0)');
+    radialGrad.addColorStop(0, 'rgba(0, 200, 255, 0.22)');
+    radialGrad.addColorStop(0.5, 'rgba(22, 131, 255, 0.08)');
+    radialGrad.addColorStop(1, 'rgba(2, 8, 23, 0)');
 
-    ctx.fillStyle = radialGradient;
+    ctx.fillStyle = radialGrad;
     ctx.beginPath();
-    ctx.arc(centerX, centerY, 200, 0, Math.PI * 2);
+    ctx.arc(centerX, centerY, 230, 0, Math.PI * 2);
     ctx.fill();
 
-    // Draw particle network connections
+    // Draw connecting lines between nodes
     for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {
         const dx = particles[i].x - particles[j].x;
         const dy = particles[i].y - particles[j].y;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
-        if (dist < 110) {
+        if (dist < 120) {
           ctx.beginPath();
-          ctx.strokeStyle = `rgba(0, 200, 255, ${0.25 * (1 - dist / 110)})`;
-          ctx.lineWidth = 0.8;
+          ctx.strokeStyle = `rgba(0, 200, 255, ${0.28 * (1 - dist / 120)})`;
+          ctx.lineWidth = 0.9;
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(particles[j].x, particles[j].y);
           ctx.stroke();
@@ -77,7 +76,7 @@ function initHeroCloudCanvas() {
       }
     }
 
-    // Update and draw particles
+    // Update & draw particle points
     particles.forEach(p => {
       p.x += p.vx;
       p.y += p.vy;
@@ -101,24 +100,24 @@ function initHeroCloudCanvas() {
 }
 
 /* -------------------------------------------------------------
-   2. DASHBOARD RESOURCE USAGE CHART (Canvas Live Waveform)
+   2. DASHBOARD RESOURCE USAGE GRAPH (Canvas Glowing Line Chart)
    ------------------------------------------------------------- */
 function initDashboardChart() {
   const chartCanvas = document.getElementById('resourceChart');
   if (!chartCanvas) return;
   const ctx = chartCanvas.getContext('2d');
 
-  let pointsCPU = [25, 30, 45, 35, 60, 50, 65, 40, 55, 70, 60, 48];
-  let pointsMem = [40, 42, 45, 48, 52, 50, 55, 58, 62, 60, 64, 65];
+  let pointsCPU = [28, 35, 48, 40, 62, 54, 70, 45, 58, 75, 65, 52];
+  let pointsMem = [42, 44, 46, 50, 55, 53, 58, 60, 65, 62, 68, 66];
 
   function drawChart() {
     const width = chartCanvas.width = chartCanvas.parentElement.clientWidth;
-    const height = chartCanvas.height = 140;
+    const height = chartCanvas.height = 135;
 
     ctx.clearRect(0, 0, width, height);
 
-    // Grid lines
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
+    // Subtle horizontal grid lines
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
     ctx.lineWidth = 1;
     for (let y = 20; y < height; y += 30) {
       ctx.beginPath();
@@ -127,11 +126,10 @@ function initDashboardChart() {
       ctx.stroke();
     }
 
-    // Function to draw smooth line
     function drawLine(data, color, fillGradient) {
       const step = width / (data.length - 1);
       ctx.beginPath();
-      ctx.moveTo(0, height - (data[0] / 100) * height);
+      ctx.moveTo(0, height - (data[0] / 100) * (height - 20) - 10);
 
       for (let i = 1; i < data.length; i++) {
         const x = i * step;
@@ -142,11 +140,11 @@ function initDashboardChart() {
       ctx.strokeStyle = color;
       ctx.lineWidth = 2.5;
       ctx.shadowColor = color;
-      ctx.shadowBlur = 8;
+      ctx.shadowBlur = 10;
       ctx.stroke();
       ctx.shadowBlur = 0;
 
-      // Fill area under line
+      // Area fill under line
       ctx.lineTo(width, height);
       ctx.lineTo(0, height);
       ctx.closePath();
@@ -154,42 +152,35 @@ function initDashboardChart() {
       ctx.fill();
     }
 
-    // Gradients
     const gradCPU = ctx.createLinearGradient(0, 0, 0, height);
-    gradCPU.addColorStop(0, 'rgba(0, 240, 255, 0.3)');
-    gradCPU.addColorStop(1, 'rgba(0, 240, 255, 0)');
+    gradCPU.addColorStop(0, 'rgba(0, 200, 255, 0.35)');
+    gradCPU.addColorStop(1, 'rgba(0, 200, 255, 0)');
 
     const gradMem = ctx.createLinearGradient(0, 0, 0, height);
-    gradMem.addColorStop(0, 'rgba(147, 51, 234, 0.25)');
-    gradMem.addColorStop(1, 'rgba(147, 51, 234, 0)');
+    gradMem.addColorStop(0, 'rgba(168, 85, 247, 0.28)');
+    gradMem.addColorStop(1, 'rgba(168, 85, 247, 0)');
 
-    drawLine(pointsCPU, '#00f0ff', gradCPU);
+    drawLine(pointsCPU, '#00c8ff', gradCPU);
     drawLine(pointsMem, '#a855f7', gradMem);
   }
 
   drawChart();
   window.addEventListener('resize', drawChart);
 
-  // Live real-time update simulation
+  // Periodic realtime updates
   setInterval(() => {
     pointsCPU.shift();
-    pointsCPU.push(Math.floor(Math.random() * 40) + 35);
+    pointsCPU.push(Math.floor(Math.random() * 40) + 38);
 
     pointsMem.shift();
-    pointsMem.push(Math.floor(Math.random() * 20) + 50);
+    pointsMem.push(Math.floor(Math.random() * 18) + 52);
 
     drawChart();
-
-    // Update server status ping timers randomly
-    const latencyEl = document.getElementById('dbLatency');
-    if (latencyEl) {
-      latencyEl.textContent = (Math.floor(Math.random() * 4) + 2) + ' ms';
-    }
-  }, 2500);
+  }, 2400);
 }
 
 /* -------------------------------------------------------------
-   3. CLOUD COST CALCULATOR / CUSTOMIZER
+   3. CLOUD COST CALCULATOR
    ------------------------------------------------------------- */
 function initCalculators() {
   const cpuSlider = document.getElementById('calcCpu');
@@ -212,7 +203,6 @@ function initCalculators() {
     ramVal.textContent = ram + ' GB RAM';
     storageVal.textContent = storage + ' GB NVMe SSD';
 
-    // Base formula: $4 base + $6/vCPU + $3/GB RAM + $0.15/GB NVMe
     const total = 4 + (cpu * 6) + (ram * 3) + Math.round(storage * 0.15);
     priceVal.textContent = '$' + total + '/mo';
   }
@@ -225,7 +215,7 @@ function initCalculators() {
 }
 
 /* -------------------------------------------------------------
-   4. DATACENTER REGION SELECTOR
+   4. DATACENTER REGION SWITCHER
    ------------------------------------------------------------- */
 function initDatacenterNodes() {
   const regionBtns = document.querySelectorAll('.region-btn');
@@ -240,15 +230,17 @@ function initDatacenterNodes() {
 
   regionBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      regionBtns.forEach(b => b.classList.remove('bg-blue-600', 'text-white', 'border-blue-400'));
-      regionBtns.forEach(b => b.classList.add('bg-slate-900/60', 'text-slate-400', 'border-slate-800'));
+      regionBtns.forEach(b => {
+        b.classList.remove('bg-blue-600', 'text-white', 'border-cyan-400');
+        b.classList.add('bg-slate-900/80', 'text-slate-400', 'border-slate-800');
+      });
 
-      btn.classList.remove('bg-slate-900/60', 'text-slate-400', 'border-slate-800');
-      btn.classList.add('bg-blue-600', 'text-white', 'border-blue-400');
+      btn.classList.remove('bg-slate-900/80', 'text-slate-400', 'border-slate-800');
+      btn.classList.add('bg-blue-600', 'text-white', 'border-cyan-400');
 
       const region = btn.getAttribute('data-region');
       if (regionNameDisplay) regionNameDisplay.textContent = region + ' Data Center';
-      if (pingDisplay) pingDisplay.textContent = pings[region] || '12 ms';
+      if (pingDisplay) pingDisplay.textContent = pings[region] || '10 ms';
     });
   });
 }

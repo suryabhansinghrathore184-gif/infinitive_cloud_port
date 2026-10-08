@@ -1,18 +1,30 @@
-/* Custom Cyberpunk & Glassmorphism Theme for Infinitive Cloud Portfolio */
+/* Infinitive Cloud - Premium Futuristic Enterprise Design System */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
 :root {
-  --bg-dark: #050814;
-  --bg-card: rgba(13, 20, 40, 0.7);
-  --bg-card-hover: rgba(20, 32, 60, 0.85);
-  --border-glass: rgba(0, 150, 255, 0.15);
-  --border-neon: rgba(0, 180, 255, 0.4);
-  --primary-blue: #0072ff;
-  --primary-cyan: #00f0ff;
-  --accent-glow: rgba(0, 162, 255, 0.35);
-  --text-main: #f0f6ff;
-  --text-muted: #94a3b8;
-  --font-main: 'Plus Jakarta Sans', sans-serif;
+  /* Design Tokens from Specification */
+  --bg-deep: #020817;
+  --bg-midnight: #061329;
+  --bg-section: #081b36;
+  
+  --electric-blue: #1683ff;
+  --electric-blue-deep: #006bff;
+  --cyan-bright: #00c8ff;
+  --cyan-accent: #38d9ff;
+  
+  --text-white: #ffffff;
+  --text-light: #d8e7ff;
+  --text-muted: #8ea8c7;
+  
+  --glass-bg: rgba(6, 19, 41, 0.75);
+  --glass-bg-hover: rgba(12, 28, 56, 0.88);
+  --glass-border: rgba(0, 200, 255, 0.18);
+  --glass-border-hover: rgba(0, 200, 255, 0.45);
+  
+  --shadow-glow: rgba(0, 200, 255, 0.25);
+  --shadow-glow-strong: rgba(22, 131, 255, 0.4);
+  
+  --font-main: 'Plus Jakarta Sans', -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 }
 
@@ -25,13 +37,13 @@
 
 body {
   font-family: var(--font-main);
-  background-color: var(--bg-dark);
-  color: var(--text-main);
+  background-color: var(--bg-deep);
+  color: var(--text-light);
   overflow-x: hidden;
   background-image: 
-    radial-gradient(circle at 50% 0%, rgba(0, 114, 255, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 100% 50%, rgba(0, 240, 255, 0.08) 0%, transparent 40%),
-    radial-gradient(circle at 0% 80%, rgba(0, 100, 220, 0.1) 0%, transparent 50%);
+    radial-gradient(circle at 50% 0%, rgba(22, 131, 255, 0.18) 0%, transparent 60%),
+    radial-gradient(circle at 100% 40%, rgba(0, 200, 255, 0.1) 0%, transparent 45%),
+    radial-gradient(circle at 0% 80%, rgba(6, 19, 41, 0.9) 0%, transparent 60%);
   background-attachment: fixed;
 }
 
@@ -40,75 +52,85 @@ body {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #050814;
+  background: var(--bg-deep);
 }
 ::-webkit-scrollbar-thumb {
-  background: #0052be;
+  background: var(--electric-blue-deep);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #00f0ff;
+  background: var(--cyan-bright);
 }
 
-/* Glassmorphism Card Style */
+/* Atmospheric Digital Grid Background */
+.bg-digital-grid {
+  background-size: 50px 50px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 200, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 200, 255, 0.035) 1px, transparent 1px);
+}
+
+/* Premium Glassmorphism Card Style */
 .glass-card {
-  background: var(--bg-card);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--border-glass);
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
   border-radius: 16px;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-card:hover {
-  background: var(--bg-card-hover);
-  border-color: var(--border-neon);
-  box-shadow: 0 10px 30px -10px var(--accent-glow);
+  background: var(--glass-bg-hover);
+  border-color: var(--glass-border-hover);
+  box-shadow: 0 12px 35px -10px var(--shadow-glow);
   transform: translateY(-4px);
 }
 
+/* Glass Header Styling */
 .glass-nav {
-  background: rgba(5, 8, 20, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(0, 150, 255, 0.12);
+  background: rgba(2, 8, 23, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 200, 255, 0.12);
 }
 
 /* Glowing Neon Text & Button Effects */
-.glow-text {
-  text-shadow: 0 0 20px rgba(0, 180, 255, 0.6), 0 0 40px rgba(0, 114, 255, 0.3);
+.glow-text-cyan {
+  color: var(--cyan-bright);
+  text-shadow: 0 0 25px rgba(0, 200, 255, 0.5), 0 0 50px rgba(22, 131, 255, 0.3);
 }
 
 .glow-btn-primary {
-  background: linear-gradient(135deg, #0052ff 0%, #00d2ff 100%);
-  box-shadow: 0 0 20px rgba(0, 150, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  transition: all 0.3s ease;
+  background: linear-gradient(135deg, var(--electric-blue-deep) 0%, var(--electric-blue) 50%, var(--cyan-bright) 100%);
+  box-shadow: 0 0 24px rgba(22, 131, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glow-btn-primary:hover {
-  box-shadow: 0 0 30px rgba(0, 200, 255, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.5);
-  transform: scale(1.03);
+  box-shadow: 0 0 36px rgba(0, 200, 255, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px) scale(1.02);
 }
 
 .glow-btn-outline {
-  border: 1px solid rgba(0, 180, 255, 0.4);
-  background: rgba(0, 100, 255, 0.08);
-  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 200, 255, 0.35);
+  background: rgba(22, 131, 255, 0.08);
+  backdrop-filter: blur(10px);
   transition: all 0.3s ease;
 }
 
 .glow-btn-outline:hover {
-  background: rgba(0, 150, 255, 0.2);
-  border-color: #00f0ff;
-  box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
-  transform: scale(1.03);
+  background: rgba(0, 200, 255, 0.18);
+  border-color: var(--cyan-bright);
+  box-shadow: 0 0 24px rgba(0, 200, 255, 0.35);
+  transform: translateY(-2px);
 }
 
-/* Badge Pulse Animation */
-.pulse-badge {
+/* Pulsing Status Dot */
+.pulse-green {
   position: relative;
 }
-.pulse-badge::before {
+.pulse-green::before {
   content: '';
   position: absolute;
   top: 50%;
@@ -123,47 +145,32 @@ body {
 }
 
 @keyframes pulse-ring {
-  0% {
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-  }
-  70% {
-    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
-  }
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
 }
 
-/* Floating Animation for Graphics */
+/* Floating Animation */
 @keyframes float-slow {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-10px) rotate(1deg);
-  }
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(0.5deg); }
 }
 .animate-float {
-  animation: float-slow 6s ease-in-out infinite;
+  animation: float-slow 7s ease-in-out infinite;
 }
 
-/* Glowing Node Lines */
-.circuit-line {
-  stroke-dasharray: 8;
-  animation: dash 20s linear infinite;
+/* Halo Circular Icon */
+.halo-icon {
+  position: relative;
+  background: radial-gradient(circle, rgba(0, 200, 255, 0.15) 0%, rgba(6, 19, 41, 0.6) 70%);
+  border: 1px solid rgba(0, 200, 255, 0.3);
+  box-shadow: 0 0 25px rgba(0, 200, 255, 0.25);
+  transition: all 0.35s ease;
 }
-@keyframes dash {
-  to {
-    stroke-dashoffset: -1000;
-  }
-}
-
-/* Custom Grid Background */
-.bg-cyber-grid {
-  background-size: 40px 40px;
-  background-image: 
-    linear-gradient(to right, rgba(0, 150, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 150, 255, 0.05) 1px, transparent 1px);
+.halo-icon:hover {
+  border-color: var(--cyan-bright);
+  box-shadow: 0 0 35px rgba(0, 200, 255, 0.5);
+  transform: scale(1.08);
 }
 
 /* Range Slider Styling */
@@ -171,7 +178,7 @@ input[type="range"] {
   -webkit-appearance: none;
   width: 100%;
   height: 6px;
-  background: rgba(0, 150, 255, 0.2);
+  background: rgba(0, 200, 255, 0.18);
   border-radius: 3px;
   outline: none;
 }
@@ -180,11 +187,11 @@ input[type="range"]::-webkit-slider-thumb {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #00f0ff;
-  box-shadow: 0 0 12px #00f0ff;
+  background: var(--cyan-bright);
+  box-shadow: 0 0 14px var(--cyan-bright);
   cursor: pointer;
-  transition: transform 0.1s ease;
+  transition: transform 0.15s ease;
 }
 input[type="range"]::-webkit-slider-thumb:hover {
-  transform: scale(1.2);
+  transform: scale(1.25);
 }
