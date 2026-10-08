@@ -1,6 +1,7 @@
-// Infinitive Cloud - Interactive Engine
+// INFINITIVE CLOUD - MASTER INTERACTIVE ENGINE
 
 document.addEventListener('DOMContentLoaded', () => {
+  initNavbarScroll();
   initHeroCloudCanvas();
   initDashboardChart();
   initCalculators();
@@ -10,7 +11,23 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* -------------------------------------------------------------
-   1. HERO CANVAS - 3D Cyber Cloud & Network Particle Renderer
+   1. NAVBAR SCROLL TRANSFORMATION
+   ------------------------------------------------------------- */
+function initNavbarScroll() {
+  const header = document.querySelector('header');
+  if (!header) return;
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+}
+
+/* -------------------------------------------------------------
+   2. HERO CANVAS - 3D LAYERED NETWORK PARTICLE ENGINE
    ------------------------------------------------------------- */
 function initHeroCloudCanvas() {
   const canvas = document.getElementById('heroCanvas');
@@ -19,21 +36,21 @@ function initHeroCloudCanvas() {
 
   function resizeCanvas() {
     canvas.width = canvas.parentElement.clientWidth;
-    canvas.height = canvas.parentElement.clientHeight || 460;
+    canvas.height = canvas.parentElement.clientHeight || 500;
   }
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
 
   const particles = [];
-  const particleCount = 75;
+  const particleCount = 85;
 
   for (let i = 0; i < particleCount; i++) {
     particles.push({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.7,
-      vy: (Math.random() - 0.5) * 0.7,
-      radius: Math.random() * 2 + 1,
+      vx: (Math.random() - 0.5) * 0.65,
+      vy: (Math.random() - 0.5) * 0.65,
+      radius: Math.random() * 2.2 + 1,
       color: Math.random() > 0.4 ? '#00c8ff' : '#1683ff'
     });
   }
@@ -44,31 +61,31 @@ function initHeroCloudCanvas() {
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
 
-    // Glowing Atmospheric Core Gradient
+    // Atmospheric Core Glow
     const radialGrad = ctx.createRadialGradient(
       centerX, centerY, 15,
-      centerX, centerY, 220
+      centerX, centerY, 240
     );
-    radialGrad.addColorStop(0, 'rgba(0, 200, 255, 0.22)');
-    radialGrad.addColorStop(0.5, 'rgba(22, 131, 255, 0.08)');
+    radialGrad.addColorStop(0, 'rgba(0, 200, 255, 0.24)');
+    radialGrad.addColorStop(0.5, 'rgba(22, 131, 255, 0.09)');
     radialGrad.addColorStop(1, 'rgba(2, 8, 23, 0)');
 
     ctx.fillStyle = radialGrad;
     ctx.beginPath();
-    ctx.arc(centerX, centerY, 230, 0, Math.PI * 2);
+    ctx.arc(centerX, centerY, 250, 0, Math.PI * 2);
     ctx.fill();
 
-    // Draw connecting lines between nodes
+    // Draw connecting network lines
     for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {
         const dx = particles[i].x - particles[j].x;
         const dy = particles[i].y - particles[j].y;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
-        if (dist < 120) {
+        if (dist < 125) {
           ctx.beginPath();
-          ctx.strokeStyle = `rgba(0, 200, 255, ${0.28 * (1 - dist / 120)})`;
-          ctx.lineWidth = 0.9;
+          ctx.strokeStyle = `rgba(0, 200, 255, ${0.28 * (1 - dist / 125)})`;
+          ctx.lineWidth = 0.95;
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(particles[j].x, particles[j].y);
           ctx.stroke();
@@ -76,7 +93,7 @@ function initHeroCloudCanvas() {
       }
     }
 
-    // Update & draw particle points
+    // Update & draw particle nodes
     particles.forEach(p => {
       p.x += p.vx;
       p.y += p.vy;
@@ -100,7 +117,7 @@ function initHeroCloudCanvas() {
 }
 
 /* -------------------------------------------------------------
-   2. DASHBOARD RESOURCE USAGE GRAPH (Canvas Glowing Line Chart)
+   3. DASHBOARD REALTIME RESOURCE USAGE GRAPH
    ------------------------------------------------------------- */
 function initDashboardChart() {
   const chartCanvas = document.getElementById('resourceChart');
@@ -116,7 +133,6 @@ function initDashboardChart() {
 
     ctx.clearRect(0, 0, width, height);
 
-    // Subtle horizontal grid lines
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
     ctx.lineWidth = 1;
     for (let y = 20; y < height; y += 30) {
@@ -144,7 +160,6 @@ function initDashboardChart() {
       ctx.stroke();
       ctx.shadowBlur = 0;
 
-      // Area fill under line
       ctx.lineTo(width, height);
       ctx.lineTo(0, height);
       ctx.closePath();
@@ -167,7 +182,6 @@ function initDashboardChart() {
   drawChart();
   window.addEventListener('resize', drawChart);
 
-  // Periodic realtime updates
   setInterval(() => {
     pointsCPU.shift();
     pointsCPU.push(Math.floor(Math.random() * 40) + 38);
@@ -180,7 +194,7 @@ function initDashboardChart() {
 }
 
 /* -------------------------------------------------------------
-   3. CLOUD COST CALCULATOR
+   4. CLOUD COST CALCULATOR
    ------------------------------------------------------------- */
 function initCalculators() {
   const cpuSlider = document.getElementById('calcCpu');
@@ -215,7 +229,7 @@ function initCalculators() {
 }
 
 /* -------------------------------------------------------------
-   4. DATACENTER REGION SWITCHER
+   5. DATACENTER REGION SWITCHER
    ------------------------------------------------------------- */
 function initDatacenterNodes() {
   const regionBtns = document.querySelectorAll('.region-btn');
@@ -231,12 +245,12 @@ function initDatacenterNodes() {
   regionBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       regionBtns.forEach(b => {
-        b.classList.remove('bg-blue-600', 'text-white', 'border-cyan-400');
-        b.classList.add('bg-slate-900/80', 'text-slate-400', 'border-slate-800');
+        b.classList.remove('bg-[#1683FF]', 'text-white', 'border-[#00C8FF]');
+        b.classList.add('bg-[#061329]', 'text-[#7189A6]', 'border-slate-800');
       });
 
-      btn.classList.remove('bg-slate-900/80', 'text-slate-400', 'border-slate-800');
-      btn.classList.add('bg-blue-600', 'text-white', 'border-cyan-400');
+      btn.classList.remove('bg-[#061329]', 'text-[#7189A6]', 'border-slate-800');
+      btn.classList.add('bg-[#1683FF]', 'text-white', 'border-[#00C8FF]');
 
       const region = btn.getAttribute('data-region');
       if (regionNameDisplay) regionNameDisplay.textContent = region + ' Data Center';
@@ -246,7 +260,7 @@ function initDatacenterNodes() {
 }
 
 /* -------------------------------------------------------------
-   5. MODAL MANAGEMENT
+   6. MODAL MANAGEMENT
    ------------------------------------------------------------- */
 function initModals() {
   const portalModal = document.getElementById('portalModal');
@@ -276,7 +290,7 @@ function initModals() {
 }
 
 /* -------------------------------------------------------------
-   6. MOBILE NAVIGATION MENU
+   7. MOBILE NAVIGATION MENU
    ------------------------------------------------------------- */
 function initMobileMenu() {
   const toggleBtn = document.getElementById('mobileMenuToggle');
